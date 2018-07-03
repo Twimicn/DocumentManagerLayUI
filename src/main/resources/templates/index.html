@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <p th:if="${username!=null}">当前用户<a th:text="${username}"></a></p>
+    <p th:if="${username==null}">未登录</p>
+</body>
+</html>
