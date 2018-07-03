@@ -31,7 +31,7 @@ public class UserController {
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 session.setAttribute("user",user);
-                return "forward:/index";
+                return "redirect:/index";
             } else {
                 modelMap.addAttribute("message", "密码错误");
                 return "login";
@@ -64,7 +64,7 @@ public class UserController {
                 return "register";
             }else{
                 session.setAttribute("user",user);
-                return "forward:/index";
+                return "redirect:/index";
             }
         }
     }
