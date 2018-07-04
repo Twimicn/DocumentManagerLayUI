@@ -13,7 +13,7 @@ public interface UserDao {
     @Select("Select * From user Where username=#{username}")
     User getUserByUsername(@Param("username") String username);
 
-    @Insert("Insert Into user(username,email,password) values (#{username},#{email},#{password})")
+    @Insert("INSERT INTO user(username,password,role,name,sex,birthday,address,contact,referrer,industryid,committeeid) VALUES (#{username},#{password},#{role},#{name},#{sex},#{birthday},#{address},#{contact},#{referrer},#{industryid},#{committeeid})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(User user);
 }

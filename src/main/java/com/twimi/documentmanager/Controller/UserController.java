@@ -30,7 +30,7 @@ public class UserController {
         User user = userDao.getUserByUsername(username);
         if (user != null) {
             if (user.getPassword().equals(password)) {
-                session.setAttribute("user",user);
+                session.setAttribute("user", user);
                 return "redirect:/index";
             } else {
                 modelMap.addAttribute("message", "密码错误");
@@ -52,18 +52,26 @@ public class UserController {
                                  HttpSession session,
                                  @RequestParam("username") String username,
                                  @RequestParam("password") String password,
-                                 @RequestParam("email") String email) {
+                                 @RequestParam(value = "role", defaultValue = "0") int role,
+                                 @RequestParam("name") String name,
+                                 @RequestParam("sex") String sex,
+                                 @RequestParam("birthday") String birthday,
+                                 @RequestParam(value = "address" ,required = false) String address,
+                                 @RequestParam("contact") String contact,
+                                 @RequestParam(value = "referrer",required = false) String referrer,
+                                 @RequestParam("industryid") int industryid,
+                                 @RequestParam("committeeid") int committeeid) {
         User user = userDao.getUserByUsername(username);
-        if(user!=null){
+        if (user != null) {
             modelMap.addAttribute("message", "用户名已存在");
             return "register";
-        }else {
-            int uid = userDao.insert(new User(username,email,password));
-            if(uid<=0){
+        } else {
+            int uid = userDao.insert(new User(username, password, role, name, sex, birthday, address, contact, referrer, industryid, committeeid));
+            if (uid <= 0) {
                 modelMap.addAttribute("message", "数据库错误");
                 return "register";
-            }else{
-                session.setAttribute("user",user);
+            } else {
+                session.setAttribute("user", user);
                 return "redirect:/index";
             }
         }

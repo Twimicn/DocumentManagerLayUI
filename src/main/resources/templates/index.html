@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0;">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <title>首页</title>
 </head>
 <body>
-    <p th:if="${username!=null}">当前用户<a th:text="${username}"></a></p>
-    <p th:if="${username==null}">未登录</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>能力规范文稿管理系统</h2>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form action="/user/login" method="post" class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" name="username" placeholder="用户名">
+                        <input class="form-control mr-sm-2" type="password" name="password" placeholder="密码">
+                        <input class="btn btn-outline-success my-2 my-sm-0"  type="submit" value="登录">
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    规范列表
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>规范文档1</td>
+                            <td>2018-1-1</td>
+                        </tr>
+                        <tr>
+                            <td>规范文档2</td>
+                            <td>2018-1-2</td>
+                        </tr>
+                        <tr>
+                            <td>规范文档3</td>
+                            <td>2018-1-3</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
