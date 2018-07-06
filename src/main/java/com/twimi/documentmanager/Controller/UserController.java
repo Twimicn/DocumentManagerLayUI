@@ -1,7 +1,8 @@
 package com.twimi.documentmanager.Controller;
 
-import com.twimi.documentmanager.Dao.UserDao;
 import com.twimi.documentmanager.Model.User;
+import com.twimi.documentmanager.Service.UserService;
+import com.twimi.documentmanager.Util.MultiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @RequestMapping(path = "/user/login", method = RequestMethod.GET)
     public String login() {
@@ -27,11 +28,31 @@ public class UserController {
                               HttpSession session,
                               @RequestParam("username") String username,
                               @RequestParam("password") String password) {
+        MultiResult<User> multiResult = userService.login(username, password);
+        if (multiResult.message != null) {
+            modelMap.addAttribute("message", multiResult.message);
+            return "login";
+        } else {
+            session.setAttribute("user", multiResult.data);
+            return "redirect:/index";
+        }
+        /*
         User user = userDao.getUserByUsername(username);
         if (user != null) {
             if (user.getPassword().equals(password)) {
-                session.setAttribute("user", user);
-                return "redirect:/index";
+                if(user.getStatus() == 0){
+                    modelMap.addAttribute("message", "您还未通过审核");
+                    return "login";
+                }else if(user.getStatus() == 1){
+                    session.setAttribute("user", user);
+                    return "redirect:/index";
+                }else if (user.getStatus() == 2){
+                    modelMap.addAttribute("message", "您的申请被拒绝");
+                    return "login";
+                }else{
+                    modelMap.addAttribute("message", "您的状态未知,请联系管理员");
+                    return "login";
+                }
             } else {
                 modelMap.addAttribute("message", "密码错误");
                 return "login";
@@ -40,6 +61,7 @@ public class UserController {
             modelMap.addAttribute("message", "用户名不存在");
             return "login";
         }
+        */
     }
 
     @RequestMapping(path = "/user/register", method = RequestMethod.GET)
@@ -56,24 +78,24 @@ public class UserController {
                                  @RequestParam("name") String name,
                                  @RequestParam("sex") String sex,
                                  @RequestParam("birthday") String birthday,
-                                 @RequestParam(value = "address" ,required = false) String address,
+                                 @RequestParam(value = "address", required = false) String address,
                                  @RequestParam("contact") String contact,
-                                 @RequestParam(value = "referrer",required = false) String referrer,
+                                 @RequestParam(value = "referrer", required = false) String referrer,
                                  @RequestParam("industryid") int industryid,
                                  @RequestParam("committeeid") int committeeid) {
-        User user = userDao.getUserByUsername(username);
-        if (user != null) {
-            modelMap.addAttribute("message", "用户名已存在");
+        User user = new User(username, password, role, name, sex, birthday, address, contact, referrer, industryid, committeeid);
+        String message = userService.register(user);
+        if (message != null) {
+            modelMap.addAttribute("message", message);
             return "register";
         } else {
-            int uid = userDao.insert(new User(username, password, role, name, sex, birthday, address, contact, referrer, industryid, committeeid));
-            if (uid <= 0) {
-                modelMap.addAttribute("message", "数据库错误");
-                return "register";
-            } else {
-                session.setAttribute("user", user);
-                return "redirect:/index";
-            }
+            return "redirect:/index";
         }
+    }
+
+    @RequestMapping(path = "/user/logout")
+    String logout(HttpSession session){
+        session.removeAttribute("user");
+        return "redirect:/index";
     }
 }
