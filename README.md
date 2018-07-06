@@ -1,4 +1,4 @@
-#Document Manager
+# Document Manager
 
 这是一个SpringBoot的测试项目,使用Intellij IDEA生成
 
@@ -22,3 +22,7 @@ SQL
 
 ### 配置文件
 `/src/main/resources/application.properties`
+
+### 数据库文件
+`database.sql`
+这个数据库文件只有建立数据表
