@@ -4,43 +4,57 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0;">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css" media="all">
+    <script src="//res.layui.com/layui/dist/layui.js?t=1527693307625" charset="utf-8"></script>
     <title>登录</title>
 </head>
-<body style="background: floralwhite">
-<div class="container" style="max-width: 450px;margin-top: 140px">
-    <div class="card">
-        <div class="card-body">
-            <form action="/user/login" method="post" class="form-signin">
-                <h2>能力规范文稿管理系统</h2>
-                <div th:if="${message!=null}" id="myAlert" class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    <strong>提示信息:</strong><a th:text="${message}"></a>
-                </div>
-                <div class="form-group">
-                    <label for="username">账号</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="用户名/邮箱" required
-                           autofocus>
-                </div>
-                <div class="form-group">
-                    <label for="password">密码</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
-                </div>
-                <input type="submit" class="btn btn-lg btn-success btn-block" value="登陆"></input>
-                <div class="float-right"><a role="button" href="/user/register" class="btn btn-link">注册</a></div>
-            </form>
-        </div>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{component :: page_title}"></div>
+    <div th:replace="~{component :: writer_nav}"></div>
+    <div class="layui-body" style="padding:10px">
+        <fieldset class="layui-elem-field" style="padding:10px;margin-top: 10px;">
+            <legend>登录</legend>
+            <div class="layui-form">
+                <form class="layui-form" action="/user/login" method="post">
+                    <div th:if="${message!=null}" class="layui-form-item">
+                        <strong>提示信息:</strong><a th:text="${message}"></a>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input class="layui-input" type="text" name="username" placeholder="用户名" required>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input class="layui-input" type="password" name="password" placeholder="密码" required>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn">登录</button>
+                            <a role="button" class="layui-btn" href="/user/register">注册</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
     </div>
 </div>
+<script>
+    layui.config({
+        base: '//res.layui.com/static/lay/modules/layui/'
+        , version: '1527693307625'
+    }).use('global');
+    layui.use(['form', 'element'], function () {
+        var form = layui.form;
+        var element = layui.element;
+        form.render();
+    });
+</script>
 </body>
 </html>
